@@ -1,0 +1,7 @@
+version: "3"
+services:
+  trades-db:
+    image: "mongo"
+    ports:
+      - "27017:27017"
+    container_name: trades-db
