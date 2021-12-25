@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ConfigModule } from '@nestjs/config';
 import { TypegooseModule } from 'nestjs-typegoose';
+import { LoggerModule } from 'nestjs-pino';
 import { TradesModule } from './trades/trades.module';
 import configuration from './configuration';
 
@@ -16,6 +17,7 @@ import configuration from './configuration';
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
+    LoggerModule.forRoot(),
   ],
 })
 export class AppModule {}

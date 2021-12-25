@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
@@ -6,6 +6,8 @@ import { CreateTradeInput, Trade } from './model/trade.model';
 
 @Injectable()
 export class TradesService {
+  private readonly logger = new Logger(TradesService.name);
+
   constructor(
     @InjectModel(Trade)
     private readonly tradeModel: ReturnModelType<typeof Trade>,
@@ -13,20 +15,21 @@ export class TradesService {
   ) {}
 
   async create(createTradeInput: CreateTradeInput) {
+    this.logger.debug(
+      `Creating new trade from input: ${createTradeInput.toString()}`,
+    );
     const createdTrade = new this.tradeModel(createTradeInput);
 
-    const { quantity, price, target, stopLoss } = createdTrade;
+    console.log(this.config.get<string>('iolComission'));
 
-    createdTrade.total = price * quantity;
-    createdTrade.rrRatio = (target - price) / (price - stopLoss);
-    createdTrade.stopLossPercentage = 1 - stopLoss / price;
-    createdTrade.targetPercentage = target / price - 1;
+    const trade = await createdTrade.save();
 
-    return await createdTrade.save();
+    this.logger.debug(`Created new trade: ${trade.toString()}`);
+
+    return trade;
   }
 
   async findAll() {
-    console.log(this.config.get<string>('iolComission'));
     return this.tradeModel.find({});
   }
 }

@@ -4,6 +4,7 @@
 
 type Trade {
   buyDate: DateTime!
+  comission: Float!
   price: Float!
   rrRatio: Float
   stopLoss: Float!
