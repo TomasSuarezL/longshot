@@ -1,5 +1,4 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { CreateTradeInput, Trade } from './model/trade.model';
@@ -11,16 +10,15 @@ export class TradesService {
   constructor(
     @InjectModel(Trade)
     private readonly tradeModel: ReturnModelType<typeof Trade>,
-    private readonly config: ConfigService,
   ) {}
 
   async create(createTradeInput: CreateTradeInput) {
     this.logger.debug(
-      `Creating new trade from input: ${createTradeInput.toString()}`,
+      `Creating new trade from input: ${Object.entries(createTradeInput).join(
+        ',',
+      )}`,
     );
     const createdTrade = new this.tradeModel(createTradeInput);
-
-    console.log(this.config.get<string>('iolComission'));
 
     const trade = await createdTrade.save();
 

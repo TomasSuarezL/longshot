@@ -30,7 +30,6 @@
     "apollo-server-express": "^3.5.0",
     "graphql": "^15",
     "mongoose": "^6.1.1",
-    "nestjs-pino": "^2.4.0",
     "nestjs-typegoose": "^7.1.38",
     "pino-http": "^6.5.0",
     "reflect-metadata": "^0.1.13",
