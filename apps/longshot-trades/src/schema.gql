@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type PageInfo {
+  startCursor: Float
+  endCursor: Float
+  hasNextPage: Boolean!
+}
+
 type Trade {
   buyDate: DateTime!
   fee: Float
@@ -28,8 +34,18 @@ enum TradeType {
   SHORT
 }
 
+type PaginatedTrade {
+  edges: [TradeEdge!]
+  pageInfo: PageInfo
+}
+
+type TradeEdge {
+  cursor: String!
+  node: Trade!
+}
+
 type Query {
-  trades: [Trade!]!
+  trades(first: Int, after: Int): PaginatedTrade!
 }
 
 type Mutation {

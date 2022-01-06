@@ -9,18 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@apollo/client": "^3.5.6",
     "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.3",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@fontsource/karla": "^4.5.0",
+    "@longshot/types": "*",
     "framer-motion": "^5",
     "graphql": "^16.2.0",
+    "graphql-request": "^3.7.0",
     "next": "12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "@longshot/types": "*"
+    "react-query": "^3.34.7"
   },
   "devDependencies": {
     "@types/node": "17.0.5",

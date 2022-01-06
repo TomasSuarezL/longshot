@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
-import { CreateTradeInput, Trade } from './model/trade.model';
+import { PaginationArgs } from 'src/lib/graphqlPaginated';
+import { CreateTradeInput, PaginatedTrade, Trade } from './model/trade.model';
 
 @Injectable()
 export class TradesService {
@@ -29,5 +30,30 @@ export class TradesService {
 
   async findAll() {
     return this.tradeModel.find({});
+  }
+
+  async findAllPaginated(pagination: PaginationArgs): Promise<PaginatedTrade> {
+    const { first, after } = pagination;
+
+    this.logger.debug(
+      `Getting paginated trades: first ${first} after ${after}`,
+    );
+
+    const totalTrades = await this.tradeModel.count();
+
+    const trades = await this.tradeModel
+      .find({})
+      .skip(after || 0)
+      .limit(first || 25)
+      .exec();
+
+    return {
+      edges: trades.map((trade) => ({ node: trade, cursor: trade._id })),
+      pageInfo: {
+        startCursor: after,
+        endCursor: after + first,
+        hasNextPage: totalTrades > after + first,
+      },
+    };
   }
 }

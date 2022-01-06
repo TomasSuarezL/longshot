@@ -9,6 +9,7 @@ import {
 import { pre, prop } from '@typegoose/typegoose';
 import { TradeType } from '@longshot/types';
 import configuration from '../../configuration';
+import { Paginated } from '../../lib/graphqlPaginated';
 
 registerEnumType(TradeType, {
   name: 'TradeType',
@@ -102,3 +103,6 @@ export class Trade {
   @Field((type) => Float)
   quantity: number;
 }
+
+@ObjectType()
+export class PaginatedTrade extends Paginated(Trade) {}
