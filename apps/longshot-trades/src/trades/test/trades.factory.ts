@@ -1,5 +1,5 @@
 import * as faker from 'faker';
-import { TradeType } from '@longshot/types';
+import { AssetType, TradeType } from '@longshot/types';
 import configuration from '../../configuration';
 import { Trade } from '../model/trade.model';
 
@@ -16,7 +16,8 @@ export class TradeFactory {
       quantity: faker.datatype.number(),
       stopLoss: fakeFloat * Math.random(),
       target: fakeFloat * (1 + Math.random()),
-      type: Object.values(TradeType)[Math.floor(Math.random() * 2)],
+      type: Object.values(TradeType)[Math.floor(Math.random() * 4)],
+      assetType: Object.values(AssetType)[Math.floor(Math.random() * 3)],
     };
 
     const { price, target, stopLoss, quantity } = fakeTrade;

@@ -1,8 +1,16 @@
+export declare enum AssetType {
+    CRYPTO = "CRYPTO",
+    STOCK = "STOCK",
+    CEDEAR = "CEDEAR"
+}
 export declare enum TradeType {
     LONG = "LONG",
-    SHORT = "SHORT"
+    SCALP = "SCALP",
+    SHORT = "SHORT",
+    SWING = "SWING"
 }
 export interface Trade {
+    assetType: AssetType;
     buyDate: Date;
     fee?: number;
     price: number;

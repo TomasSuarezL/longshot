@@ -7,13 +7,18 @@ import {
   registerEnumType,
 } from '@nestjs/graphql';
 import { pre, prop } from '@typegoose/typegoose';
-import { TradeType } from '@longshot/types';
+import { AssetType, TradeType } from '@longshot/types';
 import configuration from '../../configuration';
 import { Paginated } from '../../lib/graphqlPaginated';
 
 registerEnumType(TradeType, {
   name: 'TradeType',
   description: 'the different types of trades',
+});
+
+registerEnumType(AssetType, {
+  name: 'AssetType',
+  description: 'the different types of assets',
 });
 
 @InputType()
@@ -55,6 +60,10 @@ export class CreateTradeInput {
 })
 @ObjectType()
 export class Trade {
+  @prop({ required: true, enum: AssetType })
+  @Field((type) => AssetType)
+  assetType: AssetType;
+
   @prop({ required: true })
   @Field((type) => Date)
   buyDate: Date;
