@@ -1,9 +1,11 @@
 import React from "react";
+import { Box, Button, Flex, Heading, Spacer, useColorModeValue, VStack } from "@chakra-ui/react";
 import { Trade } from "@longshot/types";
 import { TradesList } from "../../modules/trades/components/TradesList";
 import { fetchTrades } from "../../modules/trades/graphql/queries/fetchTrades";
 import { dehydrate, QueryClient, useInfiniteQuery, useQuery } from "react-query";
 import { PaginatedResponse } from "../../lib/gql-client";
+import { AddIcon } from "@chakra-ui/icons";
 
 const TradesIndex = () => {
   const {
@@ -26,23 +28,45 @@ const TradesIndex = () => {
   console.log(hasNextPage);
 
   return (
-    <div>
-      <TradesList
-        trades={
-          trades?.pages
-            .map((p) => p.edges)
-            .flat()
-            .map((e) => e.node) ?? []
-        }
-      />
-      <button onClick={() => fetchNextPage()} disabled={!hasNextPage || isFetchingNextPage}>
-        {isFetchingNextPage
-          ? "Loading more..."
-          : hasNextPage
-          ? "Load More"
-          : "Nothing more to load"}
-      </button>
-    </div>
+    <VStack overflow="auto">
+      <Flex align="center" w="full">
+        <Heading m={[1, 2, 4]}>Trades</Heading>
+        <Spacer />
+        <Button leftIcon={<AddIcon />} colorScheme="green" variant="solid">
+          New Trade
+        </Button>
+      </Flex>
+      <Flex
+        w="full"
+        boxShadow="sm"
+        m={[1, 2, 4]}
+        bg={useColorModeValue("white", "gray.800")}
+        items="center"
+        direction="column"
+        overflow="auto"
+      >
+        <TradesList
+          trades={
+            trades?.pages
+              .map((p) => p.edges)
+              .flat()
+              .map((e) => e.node) ?? []
+          }
+        />
+        <Button
+          variant="ghost"
+          m={[1, 2, 4]}
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage || isFetchingNextPage}
+        >
+          {isFetchingNextPage
+            ? "Loading more..."
+            : hasNextPage
+            ? "Load More"
+            : "Nothing more to load"}
+        </Button>
+      </Flex>
+    </VStack>
   );
 };
 

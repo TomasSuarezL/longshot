@@ -102,7 +102,7 @@ export const Layout: React.FC = ({ children }) => {
           bg={useColorModeValue("white", "gray.800")}
           borderBottomWidth="1px"
           borderColor="blackAlpha.300"
-          h="14"
+          h="6vh"
         >
           <IconButton
             aria-label="Menu"
@@ -129,7 +129,15 @@ export const Layout: React.FC = ({ children }) => {
           </Flex>
         </Flex>
 
-        <Container as="main" p="4" maxW="container.xl">
+        <Container
+          as="main"
+          p="4"
+          maxW="container.xl"
+          h="94vh"
+          overflow="auto"
+          display="flex"
+          flexDirection="column"
+        >
           {children}
         </Container>
       </Box>
