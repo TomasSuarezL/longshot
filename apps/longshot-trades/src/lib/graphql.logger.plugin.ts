@@ -8,12 +8,14 @@ export const loggerPlugin = {
     logger.log('Request started! Query:\n' + requestContext.request.query);
 
     return {
+      async didEncounterErrors(requestContext) {
+        logger.error(requestContext.errors);
+      },
       // Fires whenever Apollo Server will parse a GraphQL
       // request to create its associated document AST.
       async parsingDidStart(requestContext) {
         logger.log('Parsing started!');
       },
-
       // Fires whenever Apollo Server will validate a
       // request's document AST against your GraphQL schema.
       async validationDidStart(requestContext) {

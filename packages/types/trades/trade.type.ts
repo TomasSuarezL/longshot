@@ -11,6 +11,17 @@ export enum TradeType {
   SWING = "SWING",
 }
 
+export interface CreateTrade {
+  assetType: AssetType;
+  buyDate: Date;
+  price: number;
+  stopLoss: number;
+  target: number;
+  ticker: string;
+  type: TradeType;
+  quantity: number;
+}
+
 export interface Trade {
   assetType: AssetType;
   buyDate: Date;

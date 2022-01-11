@@ -59,10 +59,11 @@ type Query {
 }
 
 type Mutation {
-  createTrade(trade: CreateTradeInput!): Trade!
+  createTrade(input: CreateTradeInput!): Trade!
 }
 
 input CreateTradeInput {
+  assetType: AssetType!
   buyDate: DateTime!
   price: Float!
   stopLoss: Float!

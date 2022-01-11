@@ -11,7 +11,7 @@ import { CreateTradeInput, Trade } from '../model/trade.model';
 import { closeMongoConnection, mongoModule } from './mongo.test.module';
 import { TradeFactory } from './trades.factory';
 import configuration from '../../configuration';
-import { TradeType } from '@longshot/types';
+import { AssetType, TradeType } from '@longshot/types';
 
 describe('TradesService', () => {
   let service: TradesService;
@@ -88,6 +88,7 @@ describe('TradesService', () => {
 
     it('should create a new trade with valid input', async () => {
       const fakeTradeInput: CreateTradeInput = {
+        assetType: AssetType.CRYPTO,
         buyDate: new Date(),
         price: 100,
         quantity: 20,

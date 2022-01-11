@@ -16,7 +16,7 @@ export class TradesResolver {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Mutation((returns) => Trade)
-  async createTrade(@Args('trade') trade: CreateTradeInput) {
-    return this.tradesService.create(trade);
+  async createTrade(@Args('input') input: CreateTradeInput) {
+    return this.tradesService.create(input);
   }
 }

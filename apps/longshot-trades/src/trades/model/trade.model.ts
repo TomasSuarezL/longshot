@@ -23,6 +23,9 @@ registerEnumType(AssetType, {
 
 @InputType()
 export class CreateTradeInput {
+  @Field((type) => AssetType)
+  assetType: AssetType;
+
   @Field((type) => Date)
   buyDate: Date;
 

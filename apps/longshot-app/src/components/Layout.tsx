@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { HamburgerIcon, MoonIcon, StarIcon, SunIcon } from "@chakra-ui/icons";
 import {
   useDisclosure,
@@ -70,7 +71,9 @@ export const Layout: React.FC = ({ children }) => {
       </Flex>
       <Flex direction="column" as="nav" fontSize="sm" aria-label="Main Navigation">
         <NavItem icon={StarIcon}>
-          <Text>Trades</Text>
+          <Link href="/trades">
+            <a>Trades</a>
+          </Link>
         </NavItem>
       </Flex>
     </Box>
