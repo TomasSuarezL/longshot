@@ -1,5 +1,9 @@
 import React from "react";
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Box,
   Button,
   Container,
@@ -22,8 +26,10 @@ import { useForm } from "react-hook-form";
 import { AssetType, CreateTrade, TradeType } from "@longshot/types";
 import { useMutation } from "react-query";
 import { createTrade } from "../../modules/trades/graphql/mutations/createTrade";
+import { useRouter } from "next/router";
 
 const NewTrade = () => {
+  const router = useRouter();
   const mutation = useMutation((newTrade: CreateTrade) => {
     return createTrade(newTrade);
   });
@@ -31,12 +37,24 @@ const NewTrade = () => {
   const { register, handleSubmit } = useForm<CreateTrade>();
   const onSubmit = handleSubmit((data) => {
     data.buyDate = new Date();
-    console.log(data);
     mutation.mutate(data);
   });
 
+  if (mutation.isSuccess) {
+    router.push("/trades");
+  }
+
   return (
     <VStack overflow="auto">
+      {mutation.isError && (
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle mr={2}>Error Creating Trade.</AlertTitle>
+          <AlertDescription>
+            We couldn&apos;t create the new trade. Review the input values and try again.
+          </AlertDescription>
+        </Alert>
+      )}
       <Flex justify="center" align="center" w="full">
         <Heading m={[1, 2, 4]}>New Trade</Heading>
       </Flex>
@@ -165,7 +183,6 @@ const NewTrade = () => {
               w="full"
               colorScheme="green"
               variant="solid"
-              disabled={false}
               type="submit"
             >
               {"Submit"}

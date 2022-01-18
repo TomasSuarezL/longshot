@@ -28,7 +28,6 @@ const TradesIndex = () => {
     hasNextPage,
     isFetching,
     isFetchingNextPage,
-    status,
   } = useInfiniteQuery<PaginatedResponse<Trade>>(
     "trades",
     ({ pageParam }) => fetchTrades(undefined, pageParam),
